@@ -17,15 +17,15 @@ echo "======> Creating connectors"
 curl -X POST \
     -H "Content-Type: application/json" \
     --data '{
-    "name": "sample-connector",
-    "config": {
-        "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-        "tasks.max": 1,
-        "connection.url": "jdbc:mysql://123.4.5.67:3306/test_db?user=root&password=pass",
-        "mode": "incrementing",
-        "incrementing.column.name": "id",
-        "timestamp.column.name": "modified",
-        "topic.prefix": "sample-connector-",
-        "poll.interval.ms": 1000
-        }
-    }' http://$CONNECT_REST_ADVERTISED_HOST_NAME:8083/connectors
+		"name": "MySourceConnector",
+  "config": {
+    "connector.class": "io.confluent.connect.activemq.ActiveMQSourceConnector",
+    "tasks.max": "2",
+    "activemq.url": "http://ec2-52-215-94-210.eu-west-1.compute.amazonaws.com",
+    "kafka.topic": "sbcp-aync-messaging-poc",
+    "jms.destination.name": "sbcp-async-messaging-poc",
+    "jms.destination.type": "queue",
+    "name": "MySourceConnector",
+    "confluent.topic.bootstrap.servers":"ec2-34-241-176-92.eu-west-1.compute.amazonaws.com:9092"
+  }
+}' http://$CONNECT_REST_ADVERTISED_HOST_NAME:8083/connectors
